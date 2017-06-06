@@ -1,8 +1,32 @@
+const SECURITY = {
+  TYPE: {
+    ENCRYPT: 1,
+    DECRYPT: 2
+  },
+  AES: {
+    parse: function(key, data, type) {
+      var value;
+      try {
+        value = CryptoJS.AES[type == SECURITY.TYPE.ENCRYPT ? "encrypt" : "decrypt"](data, key);
+        if (type == SECURITY.TYPE.ENCRYPT) {
+          value = value.toString();
+        } else {
+          value = value.toString(CryptoJS.enc.Utf8);
+        }
+      } catch (e) {
+        value = "";
+      }
+      return value;
+    }
+  }
+}
+
 var app = new Vue({
   el: '#app',
   data: {
     input: '',
     output: '',
+    key: '',
     histories: []
   },
 
@@ -11,23 +35,15 @@ var app = new Vue({
   		this.histories.push({
   			input: this.input,
   			output: this.output
-  		})
-  		this.$http.post('/encrypt/0', {
-  			data: this.input
-  		}).then(function (response) {
-  			this.output = response.body.value;
   		});
+      this.output = SECURITY.AES.parse(this.key, this.input, SECURITY.TYPE.ENCRYPT);
   	},
   	decrypt: function() {
   		this.histories.push({
   			input: this.input,
   			output: this.output
   		})
-  		this.$http.post('/encrypt/1', {
-  			data: this.output
-  		}).then(function (response) {
-  			this.input = response.body.value;
-  		})
+  		this.input = SECURITY.AES.parse(this.key, this.output, SECURITY.TYPE.DECRYPT);
   	}
   }
 })

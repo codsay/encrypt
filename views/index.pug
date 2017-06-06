@@ -7,6 +7,8 @@ html
     h1= "Hello"
     div#app
       div.form.encrypt-section
+        div
+          input(type="password", v-model="key")
         div.layout-container
           div
             textarea(id="input", v-model="input")
@@ -16,6 +18,7 @@ html
           button(id="encrypt", value="encrypt", @click="encrypt")= "Encrypt"
           button(id="decrypt", value="decrypt", @click="decrypt")= "Decrypt"
     
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js")
     script(src="https://unpkg.com/vue")
     script(src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.3")
     script(src="/r/main.js")
