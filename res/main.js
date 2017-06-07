@@ -31,19 +31,28 @@ var app = new Vue({
   },
 
   methods: {
-  	encrypt: function() {
-  		this.histories.push({
-  			input: this.input,
-  			output: this.output
-  		});
-      this.output = SECURITY.AES.parse(this.key, this.input, SECURITY.TYPE.ENCRYPT);
-  	},
-  	decrypt: function() {
-  		this.histories.push({
-  			input: this.input,
-  			output: this.output
-  		})
-  		this.input = SECURITY.AES.parse(this.key, this.output, SECURITY.TYPE.DECRYPT);
-  	}
+    encryptKey: function() {
+      if (this.key && !this.key.startsWith("MD5_")) {
+        this.key = "MD5_" + CryptoJS.SHA256(this.key).toString();
+      }
+    },
+    encrypt: function() {
+      if (this.input) {
+        this.histories.push({
+          input: this.input,
+          output: this.output
+        });
+        this.output = SECURITY.AES.parse(this.key, this.input, SECURITY.TYPE.ENCRYPT);
+      }
+    },
+    decrypt: function() {
+      if (this.output) {
+        this.histories.push({
+          input: this.input,
+          output: this.output
+        })
+        this.input = SECURITY.AES.parse(this.key, this.output, SECURITY.TYPE.DECRYPT);
+      }
+    }
   }
 })

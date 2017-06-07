@@ -1,24 +1,34 @@
 html
   head
     title= "Encrypt - Decrypt"
+    link(rel='stylesheet', href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css")
     link(rel='stylesheet', href="/r/main.css")
 
   body
-    h1= "Hello"
+    h1= ">> AES Encryption"
     div#app
       div.form.encrypt-section
-        div
-          input(type="password", v-model="key")
+        div.field
+          p.control
+            input.input.is-primary(id="key", type="password", v-model="key", @blur="encryptKey")
         div.layout-container
-          div
-            textarea(id="input", v-model="input")
-          div
-            textarea(id="output", v-model="output")
-      div.actions
-          button(id="encrypt", value="encrypt", @click="encrypt")= "Encrypt"
-          button(id="decrypt", value="decrypt", @click="decrypt")= "Decrypt"
+          div.field
+            p.control
+              textarea.textarea(id="input", v-model="input")
+          div.field
+            p.control
+              textarea.textarea(id="output", v-model="output")
+      div.field.is-grouped.actions
+        p.control
+          button.button.is-primary(id="encrypt", value="encrypt", @click="encrypt")
+            span.icon
+              i.fa.fa-lock(aria-hidden="true")
+        p.control
+          button.button(id="decrypt", value="decrypt", @click="decrypt")
+            span.icon
+              i.fa.fa-unlock(aria-hidden="true")
     
     script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js")
     script(src="https://unpkg.com/vue")
-    script(src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.3")
     script(src="/r/main.js")

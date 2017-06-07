@@ -10,7 +10,11 @@
 	padding-left: .3em;
 }
 
-.encrypt-section {
+.encrypt-section .key-field {
+	margin-bottom: .3em;
+}
+.encrypt-section #key {
+	width: 100%;
 }
 
 .encrypt-section textarea {
@@ -18,8 +22,12 @@
 	width: 100%;
 }
 
+.form {
+	padding: .3em;
+}
+
 .actions {
-	padding-top: .5em;
+	padding-left: .3em;
 }
 
 .actions > *:not(:first-child) {
